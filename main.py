@@ -24,7 +24,23 @@ class InternetSpeedTwitterBot:
         print(self.up)
 
     def tweet_at_provider(self):
-        pass
+        self.driver.get("http://www.twitter.com")
+        login = self.driver.find_element_by_link_text("Log in")
+        login.click()
+        time.sleep(1)
+        user = self.driver.find_element_by_name("session[username_or_email]")
+        user.send_keys(TWITTER_EMAIL)
+        t_pass = self.driver.find_element_by_name("session[password]")
+        t_pass.send_keys(TWITTER_PASS)
+        login_button = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[2]/main/div/div/div[1]/form/div/div[3]/div/div')
+        login_button.click()
+        time.sleep(1)
+        tweet_compose = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div/div[1]/div/div/div/div[2]/div')
+        tweet = f"Down: {self.down} Up:{self.up}"
+        tweet_compose.send_keys(tweet)
+        tweet_button = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[4]/div/div/div[2]/div[3]')
+        tweet_button.click()
+        self.driver.quit()
 
 
 bot = InternetSpeedTwitterBot()
